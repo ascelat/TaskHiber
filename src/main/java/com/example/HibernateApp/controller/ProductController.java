@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,15 +24,14 @@ public class ProductController {
 
     @PostMapping
     private ResponseEntity<Product> postProduct(@RequestBody Product product) {
-
         return new ResponseEntity<>(productService
-                .createProduct(product), HttpStatus.OK);
+                .createProduct(product.getName(), product.getPrice()), HttpStatus.OK);
     }
 
-    @GetMapping
-    private ResponseEntity<Product> getProduct() {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/list")
+    private ResponseEntity<List<Product>> getProduct() {
+        return new ResponseEntity<>(productService.getProductList(),
+                HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

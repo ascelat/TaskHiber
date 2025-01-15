@@ -6,12 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Data
+@NoArgsConstructor
 @Table(name = "product")
 public class Product {
     @Id
@@ -24,4 +24,7 @@ public class Product {
 
     @Column(name = "price")
     private Long price;
+
+    public Product(String name, Long price) {
+    }
 }
