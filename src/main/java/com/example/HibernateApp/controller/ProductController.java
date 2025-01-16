@@ -1,5 +1,7 @@
 package com.example.HibernateApp.controller;
 
+import com.example.HibernateApp.dto.BaseSuccessResponse;
+import com.example.HibernateApp.dto.ProductDto;
 import com.example.HibernateApp.entity.Product;
 import com.example.HibernateApp.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    private ResponseEntity<Product> postProduct(@RequestBody Product product) {
+    private ResponseEntity<Product> postProduct(@RequestBody ProductDto productDto) {
         return new ResponseEntity<>(productService
-                .createProduct(product.getName(), product.getPrice()), HttpStatus.OK);
+                .createProduct(productDto), HttpStatus.OK);
     }
 
     @GetMapping("/list")
@@ -35,20 +37,22 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Product> putProduct() {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    private ResponseEntity<Product> putProduct(@RequestBody ProductDto productDto,
+                                               @PathVariable Long id) {
+        return new ResponseEntity<>(productService.putProduct(id, productDto),HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    private ResponseEntity<Product> patchProduct() {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    private ResponseEntity<Product> patchProduct(@RequestBody ProductDto productDto,
+                                                 @PathVariable Long id) {
+        return new ResponseEntity<>(productService.patchProduct(id, productDto),
+                HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Product> deleteProduct() {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    private ResponseEntity<BaseSuccessResponse> deleteProduct(@PathVariable Long id) {
+        return new ResponseEntity<>(
+                new BaseSuccessResponse(productService.deleteProduct(id)),
+                HttpStatus.OK);
     }
 }
