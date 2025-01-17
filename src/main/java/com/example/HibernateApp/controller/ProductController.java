@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Product> putProduct(@RequestBody ProductDto productDto,
+    private ResponseEntity<Boolean> putProduct(@RequestBody ProductDto productDto,
                                                @PathVariable Long id) {
         return new ResponseEntity<>(productService.putProduct(id, productDto),HttpStatus.OK);
     }

@@ -21,14 +21,14 @@ public class ProductService {
     }
 
     @Transactional
-    public Product putProduct(Long id, ProductDto productDto) {
+    public Boolean putProduct(Long id, ProductDto productDto) {
         Product product = productRepositori.findById(id)
                 .orElseThrow(() -> new RuntimeException("Нет такого продукта"));
 
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
 
-        return productRepositori.save(product);
+        return true;
     }
 
     @Transactional
